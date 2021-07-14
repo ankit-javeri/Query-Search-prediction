@@ -75,13 +75,13 @@ def main():
   sub_domain = st.text_input("Sub-domain",value="Type Here")
   query = st.text_input("Search", value="Enter Search Query")
 
-  best_k = []
+  #best_k = []
   if query:
     best_k = k_best(query)
-    # best_k, best_probs = k_best(query)
+    #st.write(pd.DataFrame(best_k))
 
-  st.success(best_k)
-  # st.multiselect("output",options=best_k)
+  for i in range(5):
+    st.write(best_k[i])
 
 if __name__=='__main__':
   main()
