@@ -1,9 +1,8 @@
 import numpy as np
-import pandas as pd
 import re
 import pickle
 import streamlit as st
-from sklearn.feature_extraction.text import TfidfVectorizer
+#from sklearn.feature_extraction.text import TfidfVectorizer
 
 vectorizer_pkl = open("vectorizer_model.pkl","rb")
 vectorizer = pickle.load(vectorizer_pkl)
@@ -12,16 +11,11 @@ model = pickle.load(model_pkl)
 
 # Read the file
 with open('sentences.txt', 'r') as file:
-    file = file.read().lower()
-    file = re.sub(r'[^\w\s]','',file)
+  file = file.read().lower()
+  file = re.sub(r'[^\w\s]','',file)
 
 # Break into sentences
 corpus = file.split('\n')
-
-# def train(corpus):
-#   vectorizer = TfidfVectorizer(ngram_range=(1,10), analyzer='char_wb')
-#   model = vectorizer.fit_transform(corpus)
-#   return vectorizer, model
 
 # K-best suggestions for given query
 def k_best(query, corpus=corpus, vectorizer=vectorizer, model=model, k=5):
@@ -58,29 +52,27 @@ def k_best(query, corpus=corpus, vectorizer=vectorizer, model=model, k=5):
 
   return best #, best_prob
 
-
-
 def main():
 
-  st.title("Search Query Prediction")
+  st.title("Search Query Prediction with Streamlit!")
   html_temp = """
   <div style="background-color:tomato;padding:5px">
-  <h2 style="color:white;text-align:center;"> Search Query Prediction App</h2>
+  <h2 style="color:white;text-align:center;font-size:40px;font-weight:10px"> Search Query Prediction </h2>
   </div>
   """
   st.markdown(html_temp,unsafe_allow_html=True)
 
   # Add a selectbox to the sidebar:
-  domain_selectbox = st.selectbox('Select Domain', ('Finance', 'Politics', 'Education'))
-  sub_domain = st.text_input("Sub-domain",value="Type Here")
-  query = st.text_input("Search", value="Enter Search Query")
+  business = st.selectbox('Business Unit', ('SELECT', 'Finance', 'Politics', 'Education'))
+  test_tool = st.selectbox("Test management tool", ('SELECT', 'Tool 1', 'Tool 2', 'Tool 3'))
+  test_type = st.selectbox("Type of testing", ('SELECT', 'Type 1', 'Type 2', 'Type 3'))
+  query = st.text_input("Text Input", value="")
 
-  #best_k = []
+  best_k = []
   if query:
     best_k = k_best(query)
-    #st.write(pd.DataFrame(best_k))
 
-  for i in range(5):
+  for i in range(len(best_k)):
     st.write(best_k[i])
 
 if __name__=='__main__':
