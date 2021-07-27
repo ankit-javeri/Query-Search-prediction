@@ -54,7 +54,7 @@ def k_best(query, corpus=corpus, vectorizer=vectorizer, model=model, k=5):
 
 def main():
 
-  st.title("Search Query Prediction with Streamlit!")
+  st.title("Streamlit App!")
   html_temp = """
   <div style="background-color:tomato;padding:5px">
   <h2 style="color:white;text-align:center;font-size:40px;font-weight:10px"> Search Query Prediction </h2>
